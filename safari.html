@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bookmarks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container-fluid text-center text-nowrap">
+      <div class="card border-light">
+        <div class="card-body">
+          <div class="row gap-3" id="bookmarks"></div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script>
+      var element = document.getElementById('bookmarks');
+      fetch('https://script.google.com/macros/s/AKfycbzz96EQdsMbmowVtZpkkDN7HfpNwCZg24kpLBDuNmtgv5o_SCAU6yEbeAHXGyEMsl0Lhw/exec')
+        .then((response) => response.json())
+        .then((data) => element.innerHTML = data.map((object) => '<a href="' + object.link + '" class="col btn btn-outline-secondary" target="_blank">'
+          + (object.sub ? ('<span class="badge rounded-pill text-bg-secondary me-2">' + object.sub + '</span>') : '')
+          + object.label + '</a>').join(''));
+    </script>
+  </body>
+</html>
