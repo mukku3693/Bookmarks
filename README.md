@@ -1,5 +1,7 @@
 # Bookmarks
 
+`https://mukku3693.github.io/Bookmarks/chrome.html`
+
 `https://mukku3693.github.io/Bookmarks/safari.html`
 
 ## Bootstrap
