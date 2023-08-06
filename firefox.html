@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bookmarks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container-fluid text-center text-nowrap px-3">
+      <form class="d-flex mt-3" role="search" id="form">
+        <input class="form-control me-2" type="search" placeholder="Keyword" aria-label="Search" id="keyword" autofocus>
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <div class="row mb-3" id="bookmarks"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script>
+      function googleSearch(event) {
+        event.preventDefault();
+        const keyword = document.getElementById("keyword").value;
+        if (keyword) {
+          const query = "https://www.google.com/search?q=" + encodeURIComponent(keyword);
+          window.open(query, "_blank"); // 新しいタブでリンクを開く
+        }
+        return false;
+      }
+      const form = document.getElementById("form");
+      form.addEventListener("submit", googleSearch);
+
+      function joinArray(data) {
+        const categories = data.reduce((result, item) => {
+          if (!result[item.category]) {
+            result[item.category] = [];
+          }
+          result[item.category].push(item);
+          return result;
+        }, {});
+        let array = [];
+        Object.keys(categories).forEach(category => {
+          const html = '<div class="col"><div class="card mt-3"><div class="card-header">' + category + '</div><div class="card-body list-group list-group-flush p-0">'
+            + categories[category].map((object) => '<a href="'
+            + object.link + '" class="list-group-item list-group-item-action" target="_blank">'
+            + object.label + '</a>').join('') + '</div></div></div>';
+          array = array.concat(html);
+        });
+        return array.join('');
+      }
+      const element = document.getElementById('bookmarks');
+      fetch('https://script.google.com/macros/s/AKfycbzltFZdPFRYZzGhefMwLpM_Hur_aQnmXSe1eDBjZ6_9zMyP15CVaK3OX0CVM1Qlk4k/exec')
+        .then((response) => response.json())
+        .then((data) => element.innerHTML = joinArray(data));
+    </script>
+  </body>
+</html>
