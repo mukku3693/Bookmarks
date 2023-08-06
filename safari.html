@@ -9,7 +9,7 @@
   <body>
     <div class="container-fluid text-center text-nowrap px-3">
       <form class="d-flex mt-3" role="search" id="form">
-        <input class="form-control me-2" type="search" placeholder="Keyword" aria-label="Search" id="keyword">
+        <input class="form-control me-2" type="search" placeholder="Keyword" aria-label="Search" id="keyword" autofocus>
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
       <div class="row mb-3" id="bookmarks"></div>
@@ -39,9 +39,9 @@
         let array = [];
         Object.keys(categories).forEach(category => {
           const html = '<div class="col"><div class="card mt-3"><div class="card-header">' + category + '</div><div class="card-body list-group list-group-flush p-0">'
-            + categories[category].map((object) => '<a href="' + object.link + '" class="list-group-item list-group-item-action" target="_blank">'
-            + (object.sub ? (object.sub + '<span class="badge rounded-pill text-bg-secondary ms-2">' + object.label + '</span>') : object.label)
-            + '</a>').join('') + '</div></div></div>';
+            + categories[category].map((object) => '<a href="'
+            + object.link + '" class="list-group-item list-group-item-action" target="_blank">'
+            + object.label + '</a>').join('') + '</div></div></div>';
           array = array.concat(html);
         });
         return array.join('');
